@@ -1,0 +1,8 @@
+# Python virtual environment
+venv/
+
+# SQLite databases
+*.sqlite3
+
+# JetBrains folder
+.idea/
