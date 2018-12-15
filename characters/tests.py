@@ -1,6 +1,7 @@
 from django.test import TestCase
+from rest_framework.test import APITestCase
 
-from . import models, serializers
+from . import models, serializers, filters
 
 
 class HeroModelTestCase(TestCase):
@@ -100,3 +101,78 @@ class HeroSerializerTestCase(TestCase):
             ],
             serializer.errors['name']
         )
+
+
+class HeroFilterSetTestCase(TestCase):
+    fixtures = ['characters', 'heroes', 'sidekicks', 'villains']
+
+    def test_filter_name(self):
+        filterset = filters.HeroFilterSet(
+            data={
+                'name': 'Batman'
+            },
+            queryset=models.Hero.objects.all()
+        )
+        self.assertEqual(1, len(filterset.qs))
+
+    def test_filter_name_icontains(self):
+        filterset = filters.HeroFilterSet(
+            data={
+                'name__icontains': 'Green'
+            },
+            queryset=models.Hero.objects.all()
+        )
+        self.assertEqual(2, len(filterset.qs))
+
+
+class HeroViewSetTestCase(APITestCase):
+    fixtures = ['characters', 'heroes', 'sidekicks', 'villains']
+
+    def test_list(self):
+        response = self.client.get('/api/v1/heroes/')
+        self.assertEqual(200, response.status_code)
+
+    def test_create(self):
+        response = self.client.post(
+            '/api/v1/heroes/',
+            data={
+                'name': 'The Question',
+            }
+        )
+        self.assertEqual(201, response.status_code)
+
+    def test_retrieve(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        response = self.client.get(f'/api/v1/heroes/{hero.id}/')
+        self.assertEqual(200, response.status_code)
+
+    def test_update(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        response = self.client.put(
+            f'/api/v1/heroes/{hero.id}/',
+            data={
+                'name': hero.name,
+                'secret_identity': hero.secret_identity.id,
+            }
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_partial_update(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        response = self.client.patch(
+            f'/api/v1/heroes/{hero.id}/',
+            data={
+                'name': hero.name,
+                'secret_identity': hero.secret_identity.id,
+            }
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_delete(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        response = self.client.delete(f'/api/v1/heroes/{hero.id}/')
+        self.assertEqual(204, response.status_code)
