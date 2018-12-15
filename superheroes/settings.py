@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'django_filters',
+    'mozilla_django_oidc',
     'characters',
 ]
 
@@ -85,17 +86,52 @@ DATABASES = {
 }
 
 
+# Authentication
+AUTHENTICATION_BACKENDS = (
+    'superheroes.auth.OIDCAuthenticationBackend',
+)
+
+
 # Django REST Framework
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'mozilla_django_oidc.contrib.drf.OIDCAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
 
+# Mozilla OpenID Connect authentication
+OIDC_OP_AUTHORIZATION_ENDPOINT = 'http://localhost:8080/auth/realms/master/protocol/openid-connect/auth'
+OIDC_OP_TOKEN_ENDPOINT = 'http://localhost:8080/auth/realms/master/protocol/openid-connect/token'
+OIDC_OP_USER_ENDPOINT = 'http://localhost:8080/auth/realms/master/protocol/openid-connect/userinfo'
+OIDC_RP_CLIENT_ID = None
+OIDC_RP_CLIENT_SECRET = None
+
 
 # Swagger
 SWAGGER_SETTINGS = {
     'DOC_EXPANSION': 'none',
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Keycloak': {
+            'type': 'oauth2',
+            'authorizationUrl': OIDC_OP_AUTHORIZATION_ENDPOINT,
+            'tokenUrl': OIDC_OP_TOKEN_ENDPOINT,
+            'flow': 'accessCode',
+            'scopes': {
+                'profile:email': 'profile email',
+            }
+        }
+    },
+    'OAUTH2_CONFIG': {
+        'clientId': 'super-hero-swagger',
+        'appName': 'Super Hero API'
+    },
 }
 
 

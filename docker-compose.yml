@@ -1,0 +1,27 @@
+version: "3.6"
+
+services:
+
+  postgres:
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_DB: heroes
+      POSTGRES_USER: hero_dbu
+      POSTGRES_PASSWORD: password12345
+
+  keycloak:
+    image: jboss/keycloak:4.7.0.Final
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      KEYCLOAK_USER: Batman
+      KEYCLOAK_PASSWORD: 1DarkKnight
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: heroes
+      DB_USER: hero_dbu
+      DB_PASSWORD: password12345
+    ports:
+      - 8080:8080

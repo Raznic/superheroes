@@ -10,6 +10,7 @@ schema_view = get_schema_view(
         default_version='v1',
         description='API for working with comic heroes and villains.',
     ),
+    public=True,
     permission_classes=(permissions.AllowAny,),
 )
 
