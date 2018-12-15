@@ -1,0 +1,53 @@
+- model: characters.Hero
+  pk: '154ab22c-9319-43b4-944e-5835bdce2251'
+  fields:
+    name: Batman
+    secret_identity: 'aee5a882-a996-4d05-afcb-8675b8a98b2c'
+
+- model: characters.Hero
+  pk: 'a4e77fd9-d13b-4d72-a060-7abbd972b34a'
+  fields:
+    name: Superman
+    secret_identity: 'cabc16cf-fad1-4da7-9c97-8c0328a35486'
+
+- model: characters.Hero
+  pk: '2a9ab15e-0ef0-49e9-af69-ed430cc6d13c'
+  fields:
+    name: Wonder Woman
+    secret_identity: 'c00f8150-0520-4d72-8e9c-3829be1fb41a'
+
+- model: characters.Hero
+  pk: '2958bee6-6eff-4376-8588-398758120aa4'
+  fields:
+    name: The Flash
+    secret_identity: 'f4dd7157-3979-4e9e-b6b5-f3e5bf13ac24'
+
+- model: characters.Hero
+  pk: 'f9e2356a-8134-463e-a05d-819a26cfaf84'
+  fields:
+    name: Aquaman
+    secret_identity: 'ff2f8850-7361-4f7d-9148-f1d40297ac7e'
+
+- model: characters.Hero
+  pk: '556fa7cb-d18c-4bf7-bd24-d71db473caa0'
+  fields:
+    name: Martian Manhunter
+    secret_identity: 'ee1d2ea1-2bd8-4eed-8eec-88a752b943dd'
+
+- model: characters.Hero
+  pk: 'cf98a69c-a6d8-4cbf-8094-7c556ff37105'
+  fields:
+    name: Green Lantern
+    secret_identity: '34407701-a556-4ff7-83ba-8f672014ee2f'
+
+- model: characters.Hero
+  pk: 'ea69077e-0020-4d37-b334-d9f9d09e5860'
+  fields:
+    name: Green Arrow
+    secret_identity: 'a47a94b0-d959-475d-8c7b-8d28b2804f2e'
+
+- model: characters.Hero
+  pk: '6e4789bf-3a74-4ae5-92b5-2d1c228cefa1'
+  fields:
+    name: Black Canary
+    secret_identity: '938f03f6-bb46-4937-8367-77f4bcc2d82e'

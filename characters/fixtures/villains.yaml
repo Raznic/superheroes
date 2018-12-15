@@ -1,0 +1,59 @@
+- model: characters.Villain
+  pk: '2f74d70d-a4ac-4a16-906a-f4aceef2a9b0'
+  fields:
+    name: The Joker
+    archenemy: '154ab22c-9319-43b4-944e-5835bdce2251'
+
+- model: characters.Villain
+  pk: '68bf3ecc-bed8-4022-ab6c-cc0eda8c677d'
+  fields:
+    name: Lex Luthor
+    archenemy: 'a4e77fd9-d13b-4d72-a060-7abbd972b34a'
+
+- model: characters.Villain
+  pk: 'a990d4c1-b18e-4308-840e-7a8a1a747ade'
+  fields:
+    name: Reverse Flash
+    archenemy: '2958bee6-6eff-4376-8588-398758120aa4'
+
+- model: characters.Villain
+  pk: 'fbf4f222-1d87-4926-8703-ce13d4f5b054'
+  fields:
+    name: Black Manta
+    archenemy: 'f9e2356a-8134-463e-a05d-819a26cfaf84'
+
+- model: characters.Villain
+  pk: '290bed9c-e1d6-4bd5-948c-870151b42599'
+  fields:
+    name: Malcolm Merlyn
+    archenemy: 'ea69077e-0020-4d37-b334-d9f9d09e5860'
+
+- model: characters.Villain
+  pk: '151d9461-bf76-41c4-9ced-c99cc2530219'
+  fields:
+    name: The Penguin
+
+- model: characters.Villain
+  pk: 'a673e3a1-0e47-4920-9183-d0ce000de6ea'
+  fields:
+    name: Catwoman
+
+- model: characters.Villain
+  pk: 'e49f4557-1abe-4e2d-bfbf-b389757fc75e'
+  fields:
+    name: Solomon Grundy
+
+- model: characters.Villain
+  pk: 'bc751560-57f7-4c54-8869-c69b327b2437'
+  fields:
+    name: Ocean Master
+
+- model: characters.Villain
+  pk: 'e66adb9b-c78a-4eac-8cad-db887456f6af'
+  fields:
+    name: Captain Boomerang
+
+- model: characters.Villain
+  pk: 'c5a43199-a62d-40e2-b48c-f8b8da9eb32c'
+  fields:
+    name: Captain Cold

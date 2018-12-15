@@ -1,0 +1,41 @@
+- model: characters.Sidekick
+  pk: '3c20343c-b4ae-47d8-9e62-241baf0ab1e1'
+  fields:
+    name: Robin
+    hero: '154ab22c-9319-43b4-944e-5835bdce2251'
+    secret_identity: '77426730-269a-46b6-8b68-b10481a8ffc6'
+
+- model: characters.Sidekick
+  pk: '7c368ea7-42b7-4991-99f9-9de4b807a417'
+  fields:
+    name: Robin
+    hero: '154ab22c-9319-43b4-944e-5835bdce2251'
+    secret_identity: '3c8d0796-b9b6-4813-9547-d005b7a437f6'
+
+- model: characters.Sidekick
+  pk: '64d52deb-b4d1-417c-8955-67e713c03a0e'
+  fields:
+    name: Robin
+    hero: '154ab22c-9319-43b4-944e-5835bdce2251'
+    secret_identity: 'bce836e7-35c2-44fc-9966-9ae988288cf5'
+
+- model: characters.Sidekick
+  pk: '0d0568fa-e973-44cb-81e1-32ad6223e79a'
+  fields:
+    name: Robin
+    hero: '154ab22c-9319-43b4-944e-5835bdce2251'
+    secret_identity: 'aa9ffaec-9bf1-435a-aad3-9f50e29c1ab0'
+
+- model: characters.Sidekick
+  pk: 'd9204e2d-f724-43fe-b046-d518476a53b5'
+  fields:
+    name: Speedy
+    hero: 'ea69077e-0020-4d37-b334-d9f9d09e5860'
+    secret_identity: '67164cf7-0d66-4c37-a7be-076d00db63b6'
+
+- model: characters.Sidekick
+  pk: '2640d8e7-f79a-462b-89ba-6e6d0dd06a67'
+  fields:
+    name: Kid Flash
+    hero: '2958bee6-6eff-4376-8588-398758120aa4'
+    secret_identity: 'ec8ba543-9142-4d3a-8484-b72aa1060424'

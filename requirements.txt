@@ -2,3 +2,4 @@ Django==2.1.4
 djangorestframework==3.9.0
 django-filter==2.0.0
 drf-yasg==1.11.1
+PyYAML>=3.13

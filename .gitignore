@@ -6,3 +6,6 @@ venv/
 
 # JetBrains folder
 .idea/
+
+# Python cache
+__pycache__/
