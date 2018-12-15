@@ -31,6 +31,7 @@ class Hero(models.Model):
     secret_identity = models.OneToOneField(
         Character,
         on_delete=models.CASCADE,
+        related_name='hero',
         null=True,
     )
 
@@ -50,6 +51,7 @@ class Sidekick(models.Model):
     secret_identity = models.OneToOneField(
         Character,
         on_delete=models.CASCADE,
+        related_name='sidekick',
         null=True,
     )
     hero = models.ForeignKey(

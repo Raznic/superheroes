@@ -1,8 +1,9 @@
 from django.test import TestCase
-from . import models
+
+from . import models, serializers
 
 
-class HeroTestCase(TestCase):
+class HeroModelTestCase(TestCase):
     fixtures = ['characters', 'heroes', 'sidekicks', 'villains']
 
     def test_batman_secret_identity(self):
@@ -29,3 +30,73 @@ class HeroTestCase(TestCase):
         batman = models.Hero.objects.get(name='Batman')
         self.assertIsNotNone(batman.archenemy)
         self.assertEqual("The Joker", batman.archenemy.name)
+
+
+class HeroSerializerTestCase(TestCase):
+
+    def test_create_hero(self):
+        self.assertEqual(0, len(models.Hero.objects.all()))
+        serializer = serializers.HeroSerializer(
+            data={
+                'name': 'Moon Knight'
+            }
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        self.assertEqual(1, len(models.Hero.objects.all()))
+
+    def test_update_hero(self):
+        hero = models.Hero.objects.create(
+            name='Spider-Man'
+        )
+        character = models.Character.objects.create(
+            name='Peter Parker'
+        )
+        self.assertIsNone(hero.secret_identity)
+        serializer = serializers.HeroSerializer(
+            hero,
+            data={
+                'secret_identity': character.id
+            },
+            partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        hero.refresh_from_db()
+        self.assertEqual(character, hero.secret_identity)
+
+    def test_blank_name(self):
+        """
+        Test that a Hero must have a name
+        """
+        serializer = serializers.HeroSerializer(
+            data={
+                'name': ''
+            }
+        )
+        serializer.is_valid()
+        self.assertIsNotNone(serializer.errors.get('name'))
+        self.assertListEqual(
+            [
+                'This field may not be blank.'
+            ],
+            serializer.errors['name']
+        )
+
+    def test_null_name(self):
+        """
+        Test that a Hero must have a name
+        """
+        serializer = serializers.HeroSerializer(
+            data={
+                'name': None,
+            }
+        )
+        serializer.is_valid()
+        self.assertIsNotNone(serializer.errors.get('name'))
+        self.assertListEqual(
+            [
+                'This field may not be null.'
+            ],
+            serializer.errors['name']
+        )
