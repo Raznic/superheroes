@@ -236,3 +236,111 @@ class HeroViewSetTestCase(APITestCase):
         self.client.force_authenticate(self.user)
         response = self.client.delete(f'/api/v1/heroes/{hero.id}/')
         self.assertEqual(204, response.status_code)
+
+
+class SecretIdentityViewSetTestCase(APITestCase):
+    fixtures = ['secret_identities', 'heroes', 'sidekicks', 'villains']
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='test')
+
+    def test_unauthenticated_list(self):
+        response = self.client.get('/api/v1/secret_identities/')
+        self.assertEqual(401, response.status_code)
+
+    def test_unauthenticated_create(self):
+        response = self.client.post(
+            '/api/v1/secret_identities/',
+            data={
+                'name': 'Matt Murdock',
+            }
+        )
+        self.assertEqual(401, response.status_code)
+
+    def test_unauthenticated_retrieve(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        response = self.client.get(f'/api/v1/secret_identities/{identity.id}/')
+        self.assertEqual(401, response.status_code)
+
+    def test_unauthenticated_update(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        response = self.client.put(
+            f'/api/v1/secret_identities/{identity.id}/',
+            data={
+                'name': identity.name,
+            }
+        )
+        self.assertEqual(401, response.status_code)
+
+    def test_unauthenticated_partial_update(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        response = self.client.patch(
+            f'/api/v1/secret_identities/{identity.id}/',
+            data={
+                'name': identity.name,
+            }
+        )
+        self.assertEqual(401, response.status_code)
+
+    def test_unauthenticated_delete(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        response = self.client.delete(f'/api/v1/secret_identities/{identity.id}/')
+        self.assertEqual(401, response.status_code)
+
+    def test_authenticated_list(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get('/api/v1/secret_identities/')
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_create(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            '/api/v1/secret_identities/',
+            data={
+                'name': 'Matt Murdock',
+            }
+        )
+        self.assertEqual(201, response.status_code)
+
+    def test_authenticated_retrieve(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        self.client.force_authenticate(self.user)
+        response = self.client.get(f'/api/v1/secret_identities/{identity.id}/')
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_update(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        self.client.force_authenticate(self.user)
+        response = self.client.put(
+            f'/api/v1/secret_identities/{identity.id}/',
+            data={
+                'name': identity.name,
+            }
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_partial_update(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        self.client.force_authenticate(self.user)
+        response = self.client.patch(
+            f'/api/v1/secret_identities/{identity.id}/',
+            data={
+                'name': identity.name,
+            }
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_delete(self):
+        identity = models.SecretIdentity.objects.first()
+        self.assertIsNotNone(identity)
+        self.client.force_authenticate(self.user)
+        response = self.client.delete(f'/api/v1/secret_identities/{identity.id}/')
+        self.assertEqual(204, response.status_code)

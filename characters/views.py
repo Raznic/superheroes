@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
 
 from . import models, serializers, filters
 
@@ -7,6 +8,7 @@ class SecretIdentityViewSet(ModelViewSet):
     queryset = models.SecretIdentity.objects.all()
     serializer_class = serializers.SecretIdentitySerializer
     filterset_class = filters.SecretIdentityFilterSet
+    permission_classes = (IsAuthenticated,)
 
 
 class HeroViewSet(ModelViewSet):
