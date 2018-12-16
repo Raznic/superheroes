@@ -3,10 +3,10 @@ from rest_framework.viewsets import ModelViewSet
 from . import models, serializers, filters
 
 
-class CharacterViewSet(ModelViewSet):
-    queryset = models.Character.objects.all()
-    serializer_class = serializers.CharacterSerializer
-    filterset_class = filters.CharacterFilterSet
+class SecretIdentityViewSet(ModelViewSet):
+    queryset = models.SecretIdentity.objects.all()
+    serializer_class = serializers.SecretIdentitySerializer
+    filterset_class = filters.SecretIdentityFilterSet
 
 
 class HeroViewSet(ModelViewSet):

@@ -3,10 +3,10 @@ from django_filters import rest_framework as filters
 from . import models
 
 
-class CharacterFilterSet(filters.FilterSet):
+class SecretIdentityFilterSet(filters.FilterSet):
 
     class Meta:
-        model = models.Character
+        model = models.SecretIdentity
         fields = {
             'name': ['exact', 'contains', 'icontains'],
         }

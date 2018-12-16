@@ -3,10 +3,10 @@ from rest_framework import serializers
 from . import models
 
 
-class CharacterSerializer(serializers.ModelSerializer):
+class SecretIdentitySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.Character
+        model = models.SecretIdentity
         fields = '__all__'
 
 

@@ -5,7 +5,7 @@ from . import models, serializers, filters
 
 
 class HeroModelTestCase(TestCase):
-    fixtures = ['characters', 'heroes', 'sidekicks', 'villains']
+    fixtures = ['secret_identities', 'heroes', 'sidekicks', 'villains']
 
     def test_batman_secret_identity(self):
         """
@@ -50,7 +50,7 @@ class HeroSerializerTestCase(TestCase):
         hero = models.Hero.objects.create(
             name='Spider-Man'
         )
-        character = models.Character.objects.create(
+        character = models.SecretIdentity.objects.create(
             name='Peter Parker'
         )
         self.assertIsNone(hero.secret_identity)
@@ -104,7 +104,7 @@ class HeroSerializerTestCase(TestCase):
 
 
 class HeroFilterSetTestCase(TestCase):
-    fixtures = ['characters', 'heroes', 'sidekicks', 'villains']
+    fixtures = ['secret_identities', 'heroes', 'sidekicks', 'villains']
 
     def test_filter_name(self):
         filterset = filters.HeroFilterSet(
@@ -126,7 +126,7 @@ class HeroFilterSetTestCase(TestCase):
 
 
 class HeroViewSetTestCase(APITestCase):
-    fixtures = ['characters', 'heroes', 'sidekicks', 'villains']
+    fixtures = ['secret_identities', 'heroes', 'sidekicks', 'villains']
 
     def test_list(self):
         response = self.client.get('/api/v1/heroes/')

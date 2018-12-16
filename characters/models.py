@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 
 
-class Character(models.Model):
+class SecretIdentity(models.Model):
 
     id = models.UUIDField(
         default=uuid.uuid4,
@@ -29,7 +29,7 @@ class Hero(models.Model):
         blank=False
     )
     secret_identity = models.OneToOneField(
-        Character,
+        SecretIdentity,
         on_delete=models.CASCADE,
         related_name='hero',
         null=True,
@@ -49,7 +49,7 @@ class Sidekick(models.Model):
         blank=False
     )
     secret_identity = models.OneToOneField(
-        Character,
+        SecretIdentity,
         on_delete=models.CASCADE,
         related_name='sidekick',
         null=True,
