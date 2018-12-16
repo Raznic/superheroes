@@ -40,7 +40,7 @@ class HeroSerializerTestCase(TestCase):
         self.assertEqual(0, len(models.Hero.objects.all()))
         serializer = serializers.HeroSerializer(
             data={
-                'name': 'Moon Knight'
+                'name': 'Moon Knight',
             }
         )
         serializer.is_valid(raise_exception=True)
@@ -51,21 +51,21 @@ class HeroSerializerTestCase(TestCase):
         hero = models.Hero.objects.create(
             name='Spider-Man'
         )
-        character = models.SecretIdentity.objects.create(
+        identity = models.SecretIdentity.objects.create(
             name='Peter Parker'
         )
         self.assertIsNone(hero.secret_identity)
         serializer = serializers.HeroSerializer(
             hero,
             data={
-                'secret_identity': character.id
+                'secret_identity_id': identity.id
             },
             partial=True
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
         hero.refresh_from_db()
-        self.assertEqual(character, hero.secret_identity)
+        self.assertEqual(identity, hero.secret_identity)
 
     def test_blank_name(self):
         """
@@ -192,7 +192,7 @@ class HeroViewSetTestCase(APITestCase):
         response = self.client.post(
             '/api/v1/heroes/',
             data={
-                'name': 'The Question',
+                'name': 'The Question'
             }
         )
         self.assertEqual(201, response.status_code)
