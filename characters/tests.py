@@ -1,5 +1,6 @@
 from django.test import TestCase
-from rest_framework.test import APITestCase
+from django.contrib.auth.models import User
+from rest_framework.test import APITestCase, APIClient
 
 from . import models, serializers, filters
 
@@ -128,26 +129,30 @@ class HeroFilterSetTestCase(TestCase):
 class HeroViewSetTestCase(APITestCase):
     fixtures = ['secret_identities', 'heroes', 'sidekicks', 'villains']
 
-    def test_list(self):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='test')
+
+    def test_unauthenticated_list(self):
         response = self.client.get('/api/v1/heroes/')
         self.assertEqual(200, response.status_code)
 
-    def test_create(self):
+    def test_unauthenticated_create(self):
         response = self.client.post(
             '/api/v1/heroes/',
             data={
                 'name': 'The Question',
             }
         )
-        self.assertEqual(201, response.status_code)
+        self.assertEqual(401, response.status_code)
 
-    def test_retrieve(self):
+    def test_unauthenticated_retrieve(self):
         hero = models.Hero.objects.first()
         self.assertIsNotNone(hero)
         response = self.client.get(f'/api/v1/heroes/{hero.id}/')
         self.assertEqual(200, response.status_code)
 
-    def test_update(self):
+    def test_unauthenticated_update(self):
         hero = models.Hero.objects.first()
         self.assertIsNotNone(hero)
         response = self.client.put(
@@ -157,9 +162,9 @@ class HeroViewSetTestCase(APITestCase):
                 'secret_identity': hero.secret_identity.id,
             }
         )
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(401, response.status_code)
 
-    def test_partial_update(self):
+    def test_unauthenticated_partial_update(self):
         hero = models.Hero.objects.first()
         self.assertIsNotNone(hero)
         response = self.client.patch(
@@ -169,10 +174,65 @@ class HeroViewSetTestCase(APITestCase):
                 'secret_identity': hero.secret_identity.id,
             }
         )
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(401, response.status_code)
 
-    def test_delete(self):
+    def test_unauthenticated_delete(self):
         hero = models.Hero.objects.first()
         self.assertIsNotNone(hero)
+        response = self.client.delete(f'/api/v1/heroes/{hero.id}/')
+        self.assertEqual(401, response.status_code)
+
+    def test_authenticated_list(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.get('/api/v1/heroes/')
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_create(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            '/api/v1/heroes/',
+            data={
+                'name': 'The Question',
+            }
+        )
+        self.assertEqual(201, response.status_code)
+
+    def test_authenticated_retrieve(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        self.client.force_authenticate(self.user)
+        response = self.client.get(f'/api/v1/heroes/{hero.id}/')
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_update(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        self.client.force_authenticate(self.user)
+        response = self.client.put(
+            f'/api/v1/heroes/{hero.id}/',
+            data={
+                'name': hero.name,
+                'secret_identity': hero.secret_identity.id,
+            }
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_partial_update(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        self.client.force_authenticate(self.user)
+        response = self.client.patch(
+            f'/api/v1/heroes/{hero.id}/',
+            data={
+                'name': hero.name,
+                'secret_identity': hero.secret_identity.id,
+            }
+        )
+        self.assertEqual(200, response.status_code)
+
+    def test_authenticated_delete(self):
+        hero = models.Hero.objects.first()
+        self.assertIsNotNone(hero)
+        self.client.force_authenticate(self.user)
         response = self.client.delete(f'/api/v1/heroes/{hero.id}/')
         self.assertEqual(204, response.status_code)
