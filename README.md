@@ -1,6 +1,8 @@
 Super Hero API
 --------------
 
+[![CircleCI](https://circleci.com/gh/Raznic/superheroes.svg?style=shield)](https://circleci.com/gh/Raznic/superheroes)
+
 ### Table of Contents
 
 * [Purpose](#purpose)
